@@ -396,3 +396,10 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+# Olive (ignore cache)
+.olive-cache
+models
+wandb
+aml-config.json
+
