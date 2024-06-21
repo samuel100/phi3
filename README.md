@@ -11,18 +11,33 @@ Using this template, you can:
 
 ## ⚙️ Setup
 
-To fine-tune and deploy a Phi3 model using Azure AI, you'll need an [AzureML workspace](https://learn.microsoft.com/en-us/azure/machine-learning/quickstart-create-resources?view=azureml-api-2) and also access to Hugging Face.
+To fine-tune and deploy a Phi3 model using Azure AI, you'll need:
 
-Follow these steps to set-up your environment:
+- An [AzureML workspace](https://learn.microsoft.com/en-us/azure/machine-learning/quickstart-create-resources?view=azureml-api-2).
+- Access to Hugging Face.
+- Github Account.
+
+### 🖥️ Setup Azure AI
+Follow these steps to set-up AzureML:
 
 1. [Create an AzureML compute cluster](https://learn.microsoft.com/en-us/azure/machine-learning/how-to-create-attach-compute-cluster?view=azureml-api-2&tabs=python) called `gpu-cluster`.
 1. [Set-up managed identity for the compute cluster](https://learn.microsoft.com/en-us/azure/machine-learning/how-to-setup-authentication?view=azureml-api-2&amp;tabs=sdk#configure-a-managed-identity)
 1. [Get your Huggingface token string from Settings](https://huggingface.co/settings/tokens).
 1. In the AzureML Key Vault add a new secret named `hf-token` and set the value as the token from the previous step.
 1. Then grant the host compute or target compute access to the key vault resource following this [guide](https://learn.microsoft.com/en-us/azure/key-vault/general/assign-access-policy?tabs=azure-portal)
+
+## 🐙 Open repo in Github codespace
+
 1. Create a new GitHub repository using this template.
-1. Clone your repo to your local compute.
-1. Download the AzureML configuration file to the `finetuning` directory of the cloned repo following [this guide](https://learn.microsoft.com/en-us/azure/machine-learning/how-to-configure-environment?view=azureml-api-2#local-and-dsvm-only-create-a-workspace-configuration-file).
+1. Open the repo in a GitHub codespace.
+
+The devcontainer will install all the pre-requisities required to execute this template. In your codespace, you'll need to login to the Azure CLI:
+
+```bash
+az login --use-device-code
+```
+
+Also, add into `finetuning` directory your AzureML configuration file (`config.json`) containing (workspace name, resource group and subscription id) following [this guide](https://learn.microsoft.com/en-us/azure/machine-learning/how-to-configure-environment?view=azureml-api-2#local-and-dsvm-only-create-a-workspace-configuration-file).
 
 ## 🧠 Fine-tune Phi3-Mini
 
