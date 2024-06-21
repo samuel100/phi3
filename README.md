@@ -24,7 +24,7 @@ Follow these steps to set-up your environment:
 1. Clone your repo to your local compute.
 1. Download the AzureML configuration file to the `finetuning` directory of the cloned repo following [this guide](https://learn.microsoft.com/en-us/azure/machine-learning/how-to-configure-environment?view=azureml-api-2#local-and-dsvm-only-create-a-workspace-configuration-file).
 
-## 🎶 Fine-tune
+## 🧠 Fine-tune Phi3-Mini
 
 In the [olive.yaml](./finetuning/olive.yaml) file update the `keyvault_name` field with your AzureML keyvault name.
 
