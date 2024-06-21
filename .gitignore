@@ -401,5 +401,5 @@ FodyWeavers.xsd
 .olive-cache
 models
 wandb
-config.json
+finetuning/config.json
 
