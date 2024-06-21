@@ -1,10 +1,10 @@
 $schema: https://azuremlschemas.azureedge.net/latest/managedOnlineDeployment.schema.json
 name: blue
 endpoint_name: lora-endpoint
-model: azureml:lora-model_gpu-cuda_1:1
+model: azureml:oliveloramodel_gpu-cuda_1@latest
 code_configuration:
   code: src
   scoring_script: score.py
-environment: azureml:ort-genai:3
+environment: azureml:phi3-ort-inference@latest
 instance_type: Standard_NC12s_v3
 instance_count: 1

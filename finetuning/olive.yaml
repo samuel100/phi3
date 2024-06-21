@@ -9,12 +9,12 @@ input_model:
         trust_remote_code: true  
 
 data_configs:
-  - name: dataset_train
+  - name: phrase_dataset
     type: HuggingfaceContainer
     load_dataset_config:
       params:
         data_name: json
-        data_files: data/dataset-classification.json
+        data_files: data/phrase_classification_dataset.json
         split: train
     pre_process_data_config:
       params:
@@ -38,7 +38,7 @@ passes:
       lora_r: 64
       lora_alpha: 64
       lora_dropout: 0.1
-      train_data_config: dataset_train
+      train_data_config: phrase_dataset
       eval_dataset_size: 0.3
       training_args:
         seed: 0
@@ -48,11 +48,11 @@ passes:
         gradient_accumulation_steps: 4
         gradient_checkpointing: false
         learning_rate: 0.0001
-        max_steps: 20
+        max_steps: 1000
         evaluation_strategy: steps
         adam_beta2: 0.999
         max_grad_norm: 0.3
-        report_to: wandb
+        #report_to: wandb
   merge_weights:
     type: MergeAdapterWeights
   model_builder:
@@ -61,27 +61,32 @@ passes:
       precision: int4
 
 engine:
+  host:
+    type: AzureML
+    config:
+      hf_token: true
+      accelerators:
+        - device: gpu
+          execution_providers:
+            - CUDAExecutionProvider
+      aml_compute: gpu-cluster
+      aml_docker_config:
+        base_image: mcr.microsoft.com/azureml/curated/acpt-pytorch-1.13-cuda11.7:43
+        conda_file_path: ./conda_dependencies.yaml
   target:
     type: LocalSystem
     config:
       accelerators:
         - device: gpu
           execution_providers:
-            - CUDAExecutionProvider
+            - CUDAExecutionProvider    
   search_strategy: false
   cache_dir: .olive-cache
   output_dir: models/lora
-  packaging_config:
+  packaging_config: 
     type: AzureMLModels
-    name: lora-model
-    config:
-      version: 1
-      description: A lora fine-tuned phi3 model to handle phrase classification
+    name: oliveloramodel
 
 azureml_client:
-  aml_config_path: ./aml-config.json
-
-
-
-
-      
+  aml_config_path: ./config.json
+  keyvault_name: REPLACE_WITH_KEYVAULT_NAME
